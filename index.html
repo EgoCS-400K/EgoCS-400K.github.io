@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="EgoCS-400K is a replay-grounded egocentric Counter-Strike gameplay dataset for world models, with first-person videos aligned to actions, states, events, camera motion, and language."
+    >
+    <title>EgoCS-400K</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="EgoCS-400K home">EgoCS-400K</a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#dataset">Dataset</a>
+        <a href="#pipeline">Pipeline</a>
+        <a href="#schema">Schema</a>
+        <a href="#citation">Citation</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section">
+        <div class="hero-copy">
+          <p class="eyebrow">Replay-grounded egocentric gameplay data</p>
+          <h1>EgoCS-400K: An Egocentric Gameplay Dataset for World Models</h1>
+          <p class="authors">
+            Rongjin Guo*, Dong Liang*, Yuhao Liu+, Fang Liu, Tianyu Huang,
+            Gerhard P. Hancke, and Rynson W. H. Lau
+          </p>
+          <p class="affiliation">City University of Hong Kong</p>
+          <p class="hero-summary">
+            EgoCS-400K pairs clean first-person Counter-Strike gameplay videos with
+            temporally aligned actions, keyboard and mouse signals, camera motion,
+            player states, game events, captions, and prompts. The dataset is built
+            from public professional CS:GO and CS2 demos, making each video segment
+            traceable back to the replay timeline that generated it.
+          </p>
+          <div class="actions" aria-label="Project links">
+            <a class="button primary" href="https://arxiv.org/pdf/2606.18180">Paper</a>
+            <a class="button" href="https://github.com/EgoCS-400K/Dataset">Code</a>
+            <button class="button disabled" type="button" aria-disabled="true" data-disabled-link>
+              Data <span>Coming soon</span>
+            </button>
+            <a
+              class="button"
+              href="https://huggingface.co/spaces/Cooler-Master/cs2-action-annotation-viewer"
+            >
+              Demo
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="dataset" class="section dataset-band" aria-labelledby="dataset-title">
+        <div class="section-heading">
+          <p class="eyebrow">Dataset at a glance</p>
+          <h2 id="dataset-title">Large-scale video-action-language trajectories for world models</h2>
+          <p>
+            The release organizes professional match replays into first-person
+            player-view videos, protected action chains, action-safe segments, and
+            per-tick state traces.
+          </p>
+        </div>
+        <div class="metrics" aria-label="Dataset scale">
+          <div class="metric"><strong>400K+</strong><span>round-player videos</span></div>
+          <div class="metric"><strong>10K+</strong><span>hours of gameplay</span></div>
+          <div class="metric"><strong>40K+</strong><span>rounds</span></div>
+          <div class="metric"><strong>1K+</strong><span>matches</span></div>
+          <div class="metric"><strong>13</strong><span>CS:GO and CS2 maps</span></div>
+          <div class="metric"><strong>10</strong><span>player viewpoints per round</span></div>
+          <div class="metric"><strong>6</strong><span>annotation types</span></div>
+        </div>
+        <div class="viewer-callout">
+          <div>
+            <h3>Annotation Viewer</h3>
+            <p>
+              Inspect synchronized frames, actions, prompts, keyboard and mouse
+              traces, and temporal segments in the interactive Hugging Face Space.
+            </p>
+          </div>
+          <a
+            class="button primary"
+            href="https://huggingface.co/spaces/Cooler-Master/cs2-action-annotation-viewer"
+          >
+            Open Viewer
+          </a>
+        </div>
+      </section>
+
+      <section id="overview" class="section split-section" aria-labelledby="overview-title">
+        <div class="section-heading">
+          <p class="eyebrow">Overview</p>
+          <h2 id="overview-title">Replay-grounded supervision beyond video captions</h2>
+          <p>
+            Counter-Strike demos preserve executable human gameplay trajectories.
+            EgoCS-400K uses this replay structure to align rendered first-person
+            observations with controls, camera movement, states, events, and
+            language supervision.
+          </p>
+        </div>
+        <div class="feature-grid">
+          <article>
+            <h3>First-person observations</h3>
+            <p>Clean rendered videos from 10 player viewpoints per round.</p>
+          </article>
+          <article>
+            <h3>Dense action traces</h3>
+            <p>Keyboard, mouse, weapon, movement, utility, and event signals.</p>
+          </article>
+          <article>
+            <h3>Hierarchical segments</h3>
+            <p>Player sequences, DP-selected segments, protected chains, and atomic actions.</p>
+          </article>
+          <article>
+            <h3>Prior-guided captions</h3>
+            <p>Segment and protected-chain captions constrained by replay-derived facts.</p>
+          </article>
+        </div>
+        <figure class="paper-figure overview-detail">
+          <img src="assets/overview.png" alt="Overview of EgoCS-400K dataset hierarchy and annotation types">
+        </figure>
+      </section>
+
+      <section id="pipeline" class="section figure-section" aria-labelledby="pipeline-title">
+        <div class="section-heading">
+          <p class="eyebrow">Construction pipeline</p>
+          <h2 id="pipeline-title">From public demos to synchronized multimodal annotations</h2>
+          <p>
+            The pipeline collects public professional match demos, renders
+            first-person videos, filters invalid captures, parses per-tick signals,
+            builds protected action segments, and generates prior-guided captions.
+          </p>
+        </div>
+        <figure class="paper-figure">
+          <img src="assets/pipeline.png" alt="Construction pipeline of EgoCS-400K">
+        </figure>
+      </section>
+
+      <section id="schema" class="section schema-section" aria-labelledby="schema-title">
+        <div class="section-heading">
+          <p class="eyebrow">Annotation schema</p>
+          <h2 id="schema-title">Multi-level annotations share one replay timeline</h2>
+        </div>
+        <div class="schema-table" role="table" aria-label="Annotation levels">
+          <div class="schema-row header" role="row">
+            <span role="columnheader">Level</span>
+            <span role="columnheader">Artifact</span>
+            <span role="columnheader">Supervision</span>
+          </div>
+          <div class="schema-row" role="row">
+            <span role="cell">Tick state</span>
+            <span role="cell">ticks.csv</span>
+            <span role="cell">Controls, view angles, position, velocity, states</span>
+          </div>
+          <div class="schema-row" role="row">
+            <span role="cell">Atomic actions</span>
+            <span role="cell">events.csv</span>
+            <span role="cell">Fire, reload, switch, inspect, scope, grenade, crouch</span>
+          </div>
+          <div class="schema-row" role="row">
+            <span role="cell">Action timeline</span>
+            <span role="cell">action.json, protected_action.json</span>
+            <span role="cell">Frame-level actions and protected chains</span>
+          </div>
+          <div class="schema-row" role="row">
+            <span role="cell">Training segments</span>
+            <span role="cell">dp_segments.json</span>
+            <span role="cell">DP-planned clip boundaries and included actions</span>
+          </div>
+          <div class="schema-row" role="row">
+            <span role="cell">Captions</span>
+            <span role="cell">segment_caption.json, protected_caption.json</span>
+            <span role="cell">Structured scene drafts and long prompts</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="example" class="section figure-section" aria-labelledby="example-title">
+        <div class="section-heading">
+          <p class="eyebrow">Qualitative example</p>
+          <h2 id="example-title">Frames, controls, actions, and prompts in one temporal window</h2>
+          <p>
+            A four-second segment can expose sampled first-person frames, keyboard
+            and mouse traces, action intervals, environment descriptions, and a
+            video-generation prompt aligned to the same replay-derived timeline.
+          </p>
+        </div>
+        <figure class="paper-figure">
+          <img src="assets/example.png" alt="Qualitative EgoCS-400K segment with frames, input traces, actions, prompt, and environment description">
+        </figure>
+      </section>
+
+      <section id="citation" class="section citation-section" aria-labelledby="citation-title">
+        <div class="section-heading">
+          <p class="eyebrow">Citation</p>
+          <h2 id="citation-title">BibTeX</h2>
+          <p>
+            Please cite the project if EgoCS-400K is useful for your research.
+          </p>
+        </div>
+        <div class="code-block">
+          <pre id="bibtex"><code>@misc{guo2026egocs400k,
+  title={EgoCS-400K: An Egocentric Gameplay Dataset for World Models},
+  author={Guo, Rongjin and Liang, Dong and Liu, Yuhao and Liu, Fang and Huang, Tianyu and Hancke, Gerhard P. and Lau, Rynson W. H.},
+  year={2026},
+  note={Project page: https://EgoCS-400K.github.io}
+}</code></pre>
+          <button class="button copy-button" type="button" data-copy-bibtex aria-describedby="copy-status">
+            Copy BibTeX
+          </button>
+          <p class="copy-status" id="copy-status" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section id="contact" class="section contact-section" aria-labelledby="contact-title">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2 id="contact-title">Questions about the dataset?</h2>
+        </div>
+        <p>
+          Contact Yuhao LIU at
+          <a href="mailto:yuhaoliu7456@gmail.com">yuhaoliu7456@gmail.com</a>.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>EgoCS-400K</span>
+      <span>World models, egocentric video, gameplay trajectories</span>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
